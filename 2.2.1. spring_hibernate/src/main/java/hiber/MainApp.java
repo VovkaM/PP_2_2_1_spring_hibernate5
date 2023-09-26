@@ -5,45 +5,41 @@ import hiber.model.Car;
 import hiber.model.User;
 import hiber.service.UserService;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+
 import java.sql.SQLException;
 import java.util.List;
 
 public class MainApp {
-   public static void main(String[] args) throws SQLException {
-      AnnotationConfigApplicationContext context =
-              new AnnotationConfigApplicationContext(AppConfig.class);
+    public static void main(String[] args) throws SQLException {
+        AnnotationConfigApplicationContext context =
+                new AnnotationConfigApplicationContext(AppConfig.class);
 
-      UserService userService = context.getBean(UserService.class);
-      userService.add(new User("User1", "Lastname1", "user1@mail.ru",
-      new Car("BWM", 5)));
-      userService.add(new User("User2", "Lastname2", "user2@mail.ru",
-      new Car("Mersedes", 5)));
-      userService.add(new User("User3", "Lastname3", "user3@mail.ru"));
-      userService.add(new User("User4", "Lastname4", "user4@mail.ru"));
-      userService.add(new User("User5", "Lastname5", "user5@mail.ru"));
-      userService.add(new User("User6", "Lastname6", "user6@mail.ru"));
+        UserService userService = context.getBean(UserService.class);
+        userService.add(new User(null, "User1", "Lastname1", "user1@mail.ru",
+                new Car(null, "BWM", 5)));
+        userService.add(new User(null, "User2", "Lastname2", "user2@mail.ru",
+                new Car(null, "Mersedes", 5)));
 
+        List<User> users = userService.getlistUsers();
+        for (User user : users) {
+            System.out.println("Id = " + user.getId());
+            System.out.println("First Name = " + user.getFirstName());
+            System.out.println("Last Name = " + user.getLastName());
+            System.out.println("Email = " + user.getEmail());
+            System.out.println("Car = " + user.getCar());
+            System.out.println();
 
-      List<User> users = userService.getlistUsers();
-      for (User user : users) {
-         System.out.println("Id = " + user.getId());
-         System.out.println("First Name = " + user.getFirstName());
-         System.out.println("Last Name = " + user.getLastName());
-         System.out.println("Email = " + user.getEmail());
-         System.out.println("Car = " + user.getCar());
-         System.out.println();
+        }
+        List<User> users1 = userService.findUserByCar("BMW", 5);
+        for (User user : users1) {
+            System.out.println("Id = " + user.getId());
+            System.out.println("First Name = " + user.getFirstName());
+            System.out.println("Last Name = " + user.getLastName());
+            System.out.println("Email = " + user.getEmail());
+            System.out.println("Car = " + user.getCar());
+            System.out.println();
+            context.close();
 
-      }
-      List<User> users1 = userService.findUserByCar("BMW", 5);
-      for (User user : users1) {
-         System.out.println("Id = " + user.getId());
-         System.out.println("First Name = " + user.getFirstName());
-         System.out.println("Last Name = " + user.getLastName());
-         System.out.println("Email = " + user.getEmail());
-         System.out.println("Car = " + user.getCar());
-         System.out.println();
-         context.close();
-
-      }
-   }
+        }
+    }
 }
