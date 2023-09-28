@@ -6,7 +6,6 @@ import javax.persistence.*;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode
 @Getter
 @Setter
 @Entity
@@ -26,4 +25,5 @@ public class Car {
     public String toString() {
         return "Auto " + model + " серии " + series;
     }
+
 }
